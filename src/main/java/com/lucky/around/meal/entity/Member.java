@@ -15,13 +15,20 @@ import lombok.*;
 @Table(name = "member")
 public class Member {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long memberId;
+  @Id private String memberId;
 
   @Column(nullable = false)
   private String password;
 
+  @Column(nullable = false)
+  private String email;
+
   @Enumerated(EnumType.STRING)
   private MemberRole role;
+
+  @Column(nullable = false)
+  private long lat;
+
+  @Column(nullable = false)
+  private long lon;
 }

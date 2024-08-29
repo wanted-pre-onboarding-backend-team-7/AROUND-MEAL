@@ -13,3 +13,28 @@ spring:
       ddl-auto: create-drop
     show-sql: true
     defer-datasource-initialization: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      prefix: 'Refresh:'
+    excluded:
+      path-list:
+        /api/members,
+        /api/members/login,
+        /api/members/refresh_token
+jwt:
+  prefix: 'Bearer '
+  access-token-header: Authorization
+  refresh-token-header: Authorization-Refresh
+  secret: ${SECRET_KEY}
+  access-token-TTL: 300
+  refresh-token-TTL: 259200
+
+cookie:
+  refresh-token:
+    cookie-name: Refresh
+    limit-time: 259200
+    accepted-url: '/api/members/refresh_token'
+    domain: localhost
+    http-only: true

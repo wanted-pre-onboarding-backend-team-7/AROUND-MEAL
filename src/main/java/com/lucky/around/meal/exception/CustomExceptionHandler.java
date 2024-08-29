@@ -4,6 +4,8 @@ import static com.lucky.around.meal.exception.exceptionType.CommonExceptionType.
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -78,5 +80,17 @@ public class CustomExceptionHandler {
   public ResponseEntity<String> handleHttpMediaTypeNotSupportedException() {
     return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
         .body(INVALID_JSON_TYPE.getMessage());
+  }
+
+  // Spring Security 인증, 인가 관련 예외 처리
+  @ExceptionHandler(AuthenticationException.class)
+  public ResponseEntity<String> handleAuthenticationException(AuthenticationException ex) {
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+  }
+
+  // Spring Security 권한 관련 예외 처리
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex) {
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
   }
 }
